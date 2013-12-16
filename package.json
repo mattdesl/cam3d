@@ -8,11 +8,15 @@
   },
   "author": "Matt DesLauriers",
   "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattdesl/cam3d"
+  },
   "devDependencies": {
-    "domready": "~0.2.13"
+    "domready": "~0.2.13",
+    "klasse": "~1.0.4"
   },
   "dependencies": {
-    "klasse": "~1.x.x",
     "gl-matrix": "git+https://github.com/toji/gl-matrix.git#v2.2.0"
   }
 }
