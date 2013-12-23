@@ -1,0 +1,48 @@
+WORK THAT NEEDS TO BE DONE
+--------------------------
+
+Bento is a framework for creating "2D web graphics for the 21st century." It is a WebGL-first framework that is composed of various NPM modules. This means that many aspects of it can be used independently of the entire framework. Some features at a glance:
+
+- kami
+	- Modular low-level WebGL utilities for manipulating shaders, textures, FBOs, and vertex data.
+	- Clean support for multiple WebGL contexts and context loss/restore
+	- Highly optimized 2D sprite batcher with per-vertex color tinting
+- assetloader
+	- Asynchronous asset loading with custom plugins for regular and compressed textures
+- cam3d
+	- Camera utilities for 2D and 3D rendering
+- vecmath
+	- Object-oriented vector/matrix classes that [outperform gl-matrix](jsperf.com/gl-matrix-vs-vecmath)
+- gl-lines
+	- Line rendering utilities for WebGL
+
+Examples:
+
+1. Custom FBO + shader: shockwave explosion. 
+
+2. 2D Lighting & Normal Mapping
+	- Example uses thick text w/ normal map & shadows
+
+3. Godrays
+
+
+
+
+---- OTHER THINGS:
+
+- Canvas Fallback
+- Texture Atlas support
+- Bitmap Fonts (canvas font -> bitmap font ?)
+- Text-to-triangles and text-to-points (triangulates, etc)
+- Verlet physics integration
+- 3D canvas demos/tutorials
+
+
+
+
+shockwave:
+
+
+-- supports 3 simultaneous shockwaves
+draw scene to FBO
+pass the shockwave position to the shader
