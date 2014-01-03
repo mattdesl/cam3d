@@ -32,8 +32,12 @@ cam.update(); //update matrices
 
 
 - [Window Demo](http://mattdesl.github.io/cam3d/release/window.html) 
-![window](http://i.imgur.com/PaATBuK.png)
     - ([source](demos/window.js))
+
+
+
+[![window](http://mattdesl.github.io/cam3d/release/window.html)](http://i.imgur.com/PaATBuK.png)
+<sup>a rotating 3D window with snow outside -- [source code](demos/window.js))</sup>
 
 
 
