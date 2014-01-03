@@ -14,9 +14,12 @@
   },
   "devDependencies": {
     "domready": "~0.2.13",
-    "klasse": "~1.0.4"
+    "raf.js": "0.0.3",
+    "optimist": "~0.6.0",
+    "underscore": "~1.5.2",
+    "browserify": "~3.18.0"
   },
   "dependencies": {
-    "gl-matrix": "git+https://github.com/toji/gl-matrix.git#v2.2.0"
+    "klasse": "~1.0.4"
   }
 }
