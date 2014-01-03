@@ -3,7 +3,7 @@
 cam3d is a small module for working with 3D in WebGL, DOM, or 2D Canvas. It will be the basis for higher-level APIs down the road, but also stands on its own if you need basic 3D effects or low-level control over your scenegraph (e.g. working with Canvas gradients, clipping, etc).
 
 
-## code snippet
+### code snippet
 
 ```js
 var cam = new PerspectiveCamera(fieldOfView, viewportWidth, viewportHeight);
@@ -26,13 +26,18 @@ cam.update(); //update matrices
 	context.fillRect(outVec.x, outVec.y, 10, 10);
 ```
 
-## demos
+### examples
 
 
 
 
--r './lib/index.js:cam3d'
+- [Window Demo](http://mattdesl.github.io/cam3d/release/window.html) 
+![window](http://i.imgur.com/PaATBuK.png)
+    - ([source](demos/window.js))
 
 
- browserify demos/simple.js -r './lib/index.js:cam3d' -o release/js/simple.js
+
+
+
+
 

@@ -21,7 +21,6 @@ domready(function() {
     //add canvas to <body> and setup basic styles
     document.body.appendChild(canvas); 
     document.body.style.margin = "0";
-    document.body.style.overflow = "hidden";
 
     //start rendering
     requestAnimationFrame(render);
