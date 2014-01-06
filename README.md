@@ -35,11 +35,11 @@ See [the wiki](wiki) for now.
 Click the images to see the demos.
 
 [![Image](http://i.imgur.com/PaATBuK.png Window)](http://mattdesl.github.io/cam3d/release/window.html)  
-<sub>a rotating 3D window with snow outside -- [source code](demos/window.js)</sub>
+<sup>a rotating 3D window with snow outside -- [source code](demos/window.js)</sup>
 
 
 [![Image](http://i.imgur.com/2svBxYp.png Window)](http://mattdesl.github.io/cam3d/release/simple.html)  
-<sub>spinning 3D particles -- [source code](demos/simple.js))</sub>
+<sup>spinning 3D particles -- [source code](demos/simple.js))</sup>
 
 
 
