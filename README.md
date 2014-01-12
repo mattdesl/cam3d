@@ -39,7 +39,7 @@ Click the images to see the demos.
 
 
 [![Image](http://i.imgur.com/2svBxYp.png Window)](http://mattdesl.github.io/cam3d/release/simple.html)  
-<sup>spinning 3D particles -- [source code](demos/simple.js))</sup>
+<sup>spinning 3D particles -- [source code](demos/simple.js)</sup>
 
 
 
