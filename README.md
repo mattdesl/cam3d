@@ -28,7 +28,7 @@ cam.update(); //update matrices
 
 ### docs
 
-See [the wiki](wiki) for now.
+See [the wiki](https://github.com/mattdesl/cam3d/wiki) for now.
 
 ### live examples
 
