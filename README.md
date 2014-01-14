@@ -42,8 +42,13 @@ Click the images to see the demos.
 <sup>spinning 3D particles -- [source code](demos/simple.js)</sup>
 
 
+### roadmap
 
+`cam3d` and its related modules (like `vecmath`) are still a work in progress; more documentation will be added soon.
 
+The tools are intended to be decoupled from higher-level functionality, like WebGL features. If you are looking for a WebGL module, you can use these modules together with [kami](https://github.com/mattdesl/kami) or another WebGL renderer. Some other modules that may be useful in the future:
 
-
-
+- Efficient sprite tinting for Canvas 2D (currently in development)
+- Higher-level 3D features, like depth-testing, texture-mapped triangles, lighting, etc. 
+- A unified API for loading sprites with WebGL and 2D Canvas
+- Hit-detection and ray picking for 3D
