@@ -21,6 +21,7 @@
     "browserify": "~3.18.0"
   },
   "dependencies": {
-    "klasse": "~1.0.4"
+    "klasse": "~1.0.4",
+    "vecmath": "~0.1.0"
   }
 }
