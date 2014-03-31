@@ -41,6 +41,19 @@ var Camera = new Class({
     },
 
     /**
+     * Sets the width and height of the viewport. Does not
+     * update any matrices.
+     * 
+     * @method  setViewport
+     * @param {Number} width  the viewport width
+     * @param {Number} height the viewport height
+     */
+    setViewport: function(width, height) {
+        this.viewportWidth = width;
+        this.viewportHeight = height;
+    },
+
+    /**
      * Translates this camera by a specified Vector3 object
      * or x, y, z parameters. Any undefined x y z values will
      * default to zero, leaving that component unaffected.
@@ -247,18 +260,6 @@ var PerspectiveCamera = new Class({
 
         this.fieldOfView = fieldOfView;
         this.update();
-    },
-
-    /**
-     * This method sets the width and height of the viewport.
-     *
-     * @method  setViewport
-     * @param {Number} width  the viewport width
-     * @param {Number} height the viewport height
-     */
-    setViewport: function(width, height) {
-        this.viewportWidth = width;
-        this.viewportHeight = height;
     },
 
     update: function() {
