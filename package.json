@@ -1,6 +1,6 @@
 {
   "name": "cam3d",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Minimal set of Perspective & Orthographic camera utilities",
   "main": "lib/index.js",
   "scripts": {
@@ -16,9 +16,8 @@
   "devDependencies": {
     "domready": "~0.2.13",
     "raf.js": "0.0.3",
-    "optimist": "~0.6.0",
-    "underscore": "~1.5.2",
-    "browserify": "~3.18.0"
+    "browserify": "~3.18.0",
+    "uglify-js": "~2.4.8"
   },
   "dependencies": {
     "klasse": "~1.0.4",

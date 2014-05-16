@@ -17,12 +17,12 @@ var tmpVec4 = new Vector4();
  * @abstract
  */
 var Camera = new Class({
-	
+
     initialize: function() {
         this.direction = new Vector3(0, 0, -1);
         this.up = new Vector3(0, 1, 0);
         this.position = new Vector3();
-        
+
         this.projection = new Matrix4();
         this.view = new Matrix4();
         this.combined = new Matrix4();
@@ -41,10 +41,23 @@ var Camera = new Class({
     },
 
     /**
+     * Sets the width and height of the viewport. Does not
+     * update any matrices.
+     * 
+     * @method  setViewport
+     * @param {Number} width  the viewport width
+     * @param {Number} height the viewport height
+     */
+    setViewport: function(width, height) {
+        this.viewportWidth = width;
+        this.viewportHeight = height;
+    },
+
+    /**
      * Translates this camera by a specified Vector3 object
      * or x, y, z parameters. Any undefined x y z values will
      * default to zero, leaving that component unaffected.
-     * 
+     *
      * @param  {[type]} vec [description]
      * @return {[type]}     [description]
      */
@@ -80,15 +93,15 @@ var Camera = new Class({
     },
 
     rotate: function(radians, axis) {
-        util.rotate( this.direction, axis, radians );
-        util.rotate( this.up, axis, radians );
+        util.rotate(this.direction, axis, radians);
+        util.rotate(this.up, axis, radians);
     },
 
     rotateAround: function(point, radians, axis) {
         tmpVec.copy(point).sub(this.position);
-        this.translate( tmpVec );
-        this.rotate( radians, axis );
-        this.translate( tmpVec.negate() );
+        this.translate(tmpVec);
+        this.rotate(radians, axis);
+        this.translate(tmpVec.negate());
     },
 
     project: function(vec, out) {
@@ -106,25 +119,25 @@ var Camera = new Class({
 
         //implicit 1.0 for w component
         tmpVec4.set(vec.x, vec.y, vec.z, 1.0);
-        
+
         //transform into clip space
-        tmpVec4.transformMat4( this.combined );
-        
+        tmpVec4.transformMat4(this.combined);
+
         //now into NDC
         tmpVec4.x = tmpVec4.x / tmpVec4.w;
         tmpVec4.y = tmpVec4.y / tmpVec4.w;
         tmpVec4.z = tmpVec4.z / tmpVec4.w;
-        
+
         //and finally into window coordinates
-        out.x = viewportWidth/2 * tmpVec4.x + (0 + viewportWidth/2);
-        out.y = viewportHeight/2 * tmpVec4.y + (0 + viewportHeight/2);
-        out.z = (f-n)/2 * tmpVec4.z + (f+n)/2;
+        out.x = viewportWidth / 2 * tmpVec4.x + (0 + viewportWidth / 2);
+        out.y = viewportHeight / 2 * tmpVec4.y + (0 + viewportHeight / 2);
+        out.z = (f - n) / 2 * tmpVec4.z + (f + n) / 2;
 
         //if the out vector has a fourth component, we also store (1/clip.w)
         //same idea as gl_FragCoord.w
         if (out.w === 0 || out.w)
-            out.w = 1/tmpVec4.w;
-        
+            out.w = 1 / tmpVec4.w;
+
         return out;
     },
 
@@ -133,7 +146,7 @@ var Camera = new Class({
             out = new Vector3();
 
         var viewport = tmpVec4.set(0, 0, this.viewportWidth, this.viewportHeight);
-        return out.copy(vec).unproject( viewport, this.invProjectionView );
+        return out.copy(vec).unproject(viewport, this.invProjectionView);
     },
 
     getPickRay: function(x, y) {
@@ -157,16 +170,8 @@ var Camera = new Class({
 Camera.FAR_RANGE = 1.0;
 Camera.NEAR_RANGE = 0.0;
 
-// Regarding method overloading. It introduces a slow-down,
-// but presumably this is negligible compared to the benefit of convenience.
-// Besides, this is a high-level API!
-// http://jsperf.com/arguments-length-perf
-
 module.exports = Camera;
-
-
-
-},{"./vecutil":5,"klasse":6,"vecmath":"JOBZsD"}],2:[function(require,module,exports){
+},{"./vecutil":5,"klasse":7}],2:[function(require,module,exports){
 var Class = require('klasse');
 
 var Vector3 = require('vecmath').Vector3;
@@ -179,61 +184,61 @@ var tmpVec3 = new Vector3();
 
 var OrthographicCamera = new Class({
 
-	Extends: Camera,
+    Extends: Camera,
 
-	initialize: function(viewportWidth, viewportHeight) {
-		Camera.call(this);
-		this.viewportWidth = viewportWidth;
-		this.viewportHeight = viewportHeight;
+    initialize: function(viewportWidth, viewportHeight) {
+        Camera.call(this);
+        this.viewportWidth = viewportWidth||0;
+        this.viewportHeight = viewportHeight||0;
 
-		this.zoom = 1.0;
-		this.near = 0;
-		this.update();
-	},
+        this.zoom = 1.0;
+        this.near = 0;
+        this.update();
+    },
 
-	setToOrtho: function(yDown, viewportWidth, viewportHeight) {
-		var zoom = this.zoom;
-		viewportWidth = typeof viewportWidth === "number" ? viewportWidth : this.viewportWidth;
-		viewportHeight = typeof viewportHeight === "number" ? viewportHeight : this.viewportHeight;
+    setToOrtho: function(yDown, viewportWidth, viewportHeight) {
+        var zoom = this.zoom;
+        viewportWidth = typeof viewportWidth === "number" ? viewportWidth : this.viewportWidth;
+        viewportHeight = typeof viewportHeight === "number" ? viewportHeight : this.viewportHeight;
 
-		this.up.set(0, yDown ? -1 : 1, 0);
-		this.direction.set(0, 0, yDown ? 1 : -1);
-		this.position.set(zoom * viewportWidth/2, zoom * viewportHeight/2, 0);
+        this.up.set(0, yDown ? -1 : 1, 0);
+        this.direction.set(0, 0, yDown ? 1 : -1);
+        this.position.set(zoom * viewportWidth / 2, zoom * viewportHeight / 2, 0);
 
-		this.viewportWidth = viewportWidth;
-		this.viewportHeight = viewportHeight;
-		this.update();
-	},
+        this.viewportWidth = viewportWidth;
+        this.viewportHeight = viewportHeight;
+        this.update();
+    },
 
-	update: function() {
-		//TODO: support x/y offset
-		var w = this.viewportWidth,
-			h = this.viewportHeight,
-			near = Math.abs(this.near),
-			far = Math.abs(this.far),
-			zoom = this.zoom;
+    update: function() {
+        //TODO: support x/y offset
+        var w = this.viewportWidth,
+            h = this.viewportHeight,
+            near = Math.abs(this.near),
+            far = Math.abs(this.far),
+            zoom = this.zoom;
 
-		this.projection.ortho(
-					zoom * -w/2, zoom * w/2, 
-					zoom * -h/2, zoom * h/2,
-					near, far);		
-		
-
-		//build the view matrix 
-		tmpVec3.copy(this.position).add(this.direction);
-		this.view.lookAt(this.position, tmpVec3, this.up);
+        this.projection.ortho(
+            zoom * -w / 2, zoom * w / 2,
+            zoom * -h / 2, zoom * h / 2,
+            near, far);
 
 
-		//projection * view matrix
-		this.combined.copy(this.projection).mul(this.view);
+        //build the view matrix 
+        tmpVec3.copy(this.position).add(this.direction);
+        this.view.lookAt(this.position, tmpVec3, this.up);
 
-		//invert combined matrix, used for unproject
-		this.invProjectionView.copy(this.combined).invert();
-	}
+
+        //projection * view matrix
+        this.combined.copy(this.projection).mul(this.view);
+
+        //invert combined matrix, used for unproject
+        this.invProjectionView.copy(this.combined).invert();
+    }
 });
 
 module.exports = OrthographicCamera;
-},{"./Camera":1,"klasse":6,"vecmath":"JOBZsD"}],3:[function(require,module,exports){
+},{"./Camera":1,"klasse":7}],3:[function(require,module,exports){
 var Class = require('klasse');
 
 var Matrix4 = require('vecmath').Matrix4;
@@ -243,50 +248,45 @@ var Camera = require('./Camera');
 
 var tmpVec3 = new Vector3();
 
-var dirvec = null,
-    rightvec = null,
-    billboardMatrix = null;
-
 var PerspectiveCamera = new Class({
 
-	Extends: Camera,
+    Extends: Camera,
 
-	//fov in RADIANS!
-	initialize: function(fieldOfView, viewportWidth, viewportHeight) {
-		Camera.call(this);
-		this.viewportWidth = viewportWidth;
-		this.viewportHeight = viewportHeight;
+    //fov in RADIANS!
+    initialize: function(fieldOfView, viewportWidth, viewportHeight) {
+        Camera.call(this);
+        this.viewportWidth = viewportWidth;
+        this.viewportHeight = viewportHeight;
 
-        this.billboardMatrixDirty = true;
+        this.fieldOfView = fieldOfView;
+        this.update();
+    },
 
-		this.fieldOfView = fieldOfView;
-		this.update();
-	},
+    update: function() {
+        var aspect = this.viewportWidth / this.viewportHeight;
 
-	/**
-	 * This method sets the width and height of the viewport.
-	 * 
-	 * @method  setViewport
-	 * @param {Number} width  the viewport width
-	 * @param {Number} height the viewport height
-	 */
-	setViewport: function(width, height) {
-		this.viewportWidth = width;
-		this.viewportHeight = height;
-	},
+        //create a perspective matrix for our camera
+        this.projection.perspective(this.fieldOfView, aspect,
+            Math.abs(this.near), Math.abs(this.far));
 
-    /**
-     * This is a helper function to determine the scaling factor
-     * for 2D billboard sprites when projected in 3D space. 
-     *
-     * @param  {vec3} position     the 3D position
-     * @param  {vec2} originalSize the 2D sprite size
-     * @return {vec2}              the output size
-     */
-    // projectedScale: function(position, originalSize, out) {
-    // },
+        //build the view matrix 
+        tmpVec3.copy(this.position).add(this.direction);
+        this.view.lookAt(this.position, tmpVec3, this.up);
+
+        //projection * view matrix
+        this.combined.copy(this.projection).mul(this.view);
+
+        //invert combined matrix, used for unproject
+        this.invProjectionView.copy(this.combined).invert();
+    }
+});
+
+module.exports = PerspectiveCamera;
 
 
+
+/*
+TODO: Billboarding should be moved to a separate module.
 
     updateBillboardMatrix: function() {
         if (!dirvec) {
@@ -325,7 +325,7 @@ var PerspectiveCamera = new Class({
         this.billboardMatrixDirty = false;
     },
 
-    /**
+    
      * This is a utility function for canvas 3D rendering, 
      * which determines the "point size" of a camera-facing
      * sprite billboard given its 3D world position 
@@ -341,7 +341,7 @@ var PerspectiveCamera = new Class({
      * @param  {Vector2} size the x and y dimensions of the sprite
      * @param  {Vector2} out the result, scaled x and y dimensions in 3D space
      * @return {Vector2} returns the out parameter, or a new Vector2 if none was given    
-     */
+     
     getPointSize: function(vec, size, out) {
         //TODO: optimize this with a simple distance calculation:
         //https://developer.valvesoftware.com/wiki/Field_of_View
@@ -374,29 +374,8 @@ var PerspectiveCamera = new Class({
         return out.set(w, h);
     },
 
-	update: function() {
-		var aspect = this.viewportWidth / this.viewportHeight;
-
-		//create a perspective matrix for our camera
-		this.projection.perspective(this.fieldOfView, aspect, 
-							Math.abs(this.near), Math.abs(this.far));
-
-		//build the view matrix 
-		tmpVec3.copy(this.position).add(this.direction);
-		this.view.lookAt(this.position, tmpVec3, this.up);
-
-		//projection * view matrix
-		this.combined.copy(this.projection).mul(this.view);
-
-		//invert combined matrix, used for unproject
-		this.invProjectionView.copy(this.combined).invert();
-
-        this.billboardMatrixDirty = true;
-	}
-});
-
-module.exports = PerspectiveCamera;
-},{"./Camera":1,"klasse":6,"vecmath":"JOBZsD"}],4:[function(require,module,exports){
+*/
+},{"./Camera":1,"klasse":7}],4:[function(require,module,exports){
 module.exports = {
 	vecutil: require('./vecutil'),
 	Camera: require('./Camera'),
@@ -438,7 +417,9 @@ util.rotate = function(vec, axis, radians) {
 };
 
 module.exports = util;
-},{"vecmath":"JOBZsD"}],6:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
+
+},{}],7:[function(require,module,exports){
 function hasGetterOrSetter(def) {
 	return (!!def.get && typeof def.get === "function") || (!!def.set && typeof def.set === "function");
 }
@@ -536,7 +517,30 @@ function mixin(myClass, mixins) {
 }
 
 /**
- * 
+ * Creates a new class with the given descriptor.
+ * The constructor, defined by the name `initialize`,
+ * is an optional function. If unspecified, an anonymous
+ * function will be used which calls the parent class (if
+ * one exists). 
+ *
+ * You can also use `Extends` and `Mixins` to provide subclassing
+ * and inheritance.
+ *
+ * @class  Class
+ * @constructor
+ * @param {Object} definition a dictionary of functions for the class
+ * @example
+ *
+ * 		var MyClass = new Class({
+ * 		
+ * 			initialize: function() {
+ * 				this.foo = 2.0;
+ * 			},
+ *
+ * 			bar: function() {
+ * 				return this.foo + 5;
+ * 			}
+ * 		});
  */
 function Class(definition) {
 	if (!definition)
