@@ -1,6 +1,6 @@
 {
   "name": "cam3d",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Minimal set of Perspective & Orthographic camera utilities",
   "main": "lib/index.js",
   "scripts": {
