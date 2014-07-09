@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "klasse": "~1.0.4",
-    "vecmath": "~0.1.0"
+    "vecmath": "^0.1.2"
   }
 }
